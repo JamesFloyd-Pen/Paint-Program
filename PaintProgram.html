@@ -1,0 +1,455 @@
+<HTML>
+
+	<HEAD>
+		<TITLE>WEBGL B</TITLE>
+		
+		
+		
+		<script id="2dVertexShader" type="notjs">
+		attribute vec4 a_position;	
+		attribute vec3 a_color;
+		varying vec3 v_color;
+		void main()
+		{
+			v_color = a_color;
+			gl_Position=a_position;
+		}		
+		</SCRIPT>
+		
+		<script id="2dFragmentShader" type="notjs">	
+		//Fragment shaders do not have precision so we have to set it.
+		precision mediump float;
+		varying vec3 v_color;
+		void main()
+		{
+			gl_FragColor = vec4(v_color,1); //Between 0 and 1.
+		}
+		</script>
+		<script src="WebGL.js" ></script>
+		<SCRIPT src="Triangle.js"></SCRIPT>		
+		<SCRIPT src="DCircle.js"></SCRIPT>
+		<SCRIPT src="DCircleOL.js"></SCRIPT>
+		<SCRIPT src="DTriangle.js"></SCRIPT>
+		<SCRIPT src="DLine.js"></script>
+		<SCRIPT src="DRectangle.js"></script>
+		<SCRIPT src="DNPolygon.js"></script>
+		<SCRIPT src="DTriangleOL.js"></script>
+		<SCRIPT src="DRectangleOL.js"></script>
+		<SCRIPT src="DNPolygonOL.js"></script>
+
+
+				
+		<SCRIPT>
+			class Main
+			{
+				constructor()
+				{
+					this.myWebGl = new WebGL()
+					//this.myWebgl.program;
+					this.shapes = new Array();
+					//this.shapes.push(new Triangle);
+					this.update()
+					
+					}
+				update()
+				{
+				//master update for the program.
+					for(var i =0; i < this.shapes.length; i ++)
+					{
+						this.shapes[i].update();
+					}
+					//clear screen
+					for(var i =0; i < this.shapes.length; i ++)
+					{
+						this.shapes[i].draw(this.myWebGl.program);
+					}
+				}
+				handlePoint(x,y)
+				{
+					if(selID ==0){
+						//INSERT CIRCLE THINGS
+						console.log("The click occurred on "+x+","+y);
+						if(fID ==0)
+						{
+							if(this.shapes.length ==0 || 
+							this.shapes[this.shapes.length-1].isFinished == true)
+							{
+								//create a new shape and add the point.
+								this.shapes.push(new DCircle())
+								this.shapes[this.shapes.length-1].addPoint(x,y)
+							}
+							else
+							{
+								//add the point to the last shape.
+								this.shapes[this.shapes.length-1].addPoint(x,y)
+								
+							}
+							this.update()
+						}
+						else if(fID == 1)
+						{
+							if(this.shapes.length ==0 || 
+							this.shapes[this.shapes.length-1].isFinished == true)
+							{
+								//create a new shape and add the point.
+								this.shapes.push(new DCircleOL())
+								this.shapes[this.shapes.length-1].addPoint(x,y)
+							}
+							else
+							{
+								//add the point to the last shape.
+								this.shapes[this.shapes.length-1].addPoint(x,y)
+								
+							}
+							this.update()
+						
+						
+						
+						}
+						
+
+					}
+					else if(selID ==1)
+					{
+						//INSERT RECTANGLE THINGS
+						console.log("The click occurred on "+x+","+y);
+						if(fID== 0)
+						{
+							if(this.shapes.length ==0 || 
+							this.shapes[this.shapes.length-1].isFinished == true)
+							{
+								//create a new shape and add the point.
+								this.shapes.push(new DRectangle())
+								this.shapes[this.shapes.length-1].addPoint(x,y)
+							}
+							else
+							{
+								//add the point to the last shape.
+								this.shapes[this.shapes.length-1].addPoint(x,y)
+							}
+							this.update()
+						}
+						else if (fID == 1)
+						{
+							if(this.shapes.length ==0 || 
+							this.shapes[this.shapes.length-1].isFinished == true)
+							{
+								//create a new shape and add the point.
+								this.shapes.push(new DRectangleOL())
+								this.shapes[this.shapes.length-1].addPoint(x,y)
+							}
+							else
+							{
+								//add the point to the last shape.
+								this.shapes[this.shapes.length-1].addPoint(x,y)
+							}
+							this.update()
+						
+						}
+					}
+					else if(selID == 2)
+					{	
+						console.log("The click occurred on "+x+","+y);
+						if(fID == 0){
+							if(this.shapes.length ==0 || 
+							this.shapes[this.shapes.length-1].isFinished == true)
+							{
+								//create a new shape and add the point.
+								this.shapes.push(new DTriangle())
+								this.shapes[this.shapes.length-1].addPoint(x,y)
+							}
+							else
+							{
+								//add the point to the last shape.
+								this.shapes[this.shapes.length-1].addPoint(x,y)
+							}
+							this.update()
+
+						}
+						
+						else if(fID == 1){
+							if(this.shapes.length ==0 || 
+							this.shapes[this.shapes.length-1].isFinished == true)
+							{
+								//create a new shape and add the point.
+								this.shapes.push(new DTriangleOL())
+								this.shapes[this.shapes.length-1].addPoint(x,y)
+							}
+							else
+							{
+								//add the point to the last shape.
+								this.shapes[this.shapes.length-1].addPoint(x,y)
+							}
+							this.update()
+						}
+					}
+					
+					else if(selID == 3)
+					{
+					
+						console.log("The click occurred on "+x+","+y);
+						if(fID == 0)
+						{
+							if(this.shapes.length ==0 || 
+								this.shapes[this.shapes.length-1].isFinished == true)
+								{
+									//create a new shape and add the point.
+									this.shapes.push(new DNPolygon())
+									this.shapes[this.shapes.length-1].addPoint(x,y)
+								}
+								else
+								{
+									//add the point to the last shape.
+									this.shapes[this.shapes.length-1].addPoint(x,y)
+								}
+								this.update()
+						}
+						else if(fID == 1)
+						{
+							if(this.shapes.length ==0 || 
+								this.shapes[this.shapes.length-1].isFinished == true)
+								{
+									//create a new shape and add the point.
+									this.shapes.push(new DNPolygonOL())
+									this.shapes[this.shapes.length-1].addPoint(x,y)
+								}
+								else
+								{
+									//add the point to the last shape.
+									this.shapes[this.shapes.length-1].addPoint(x,y)
+								}
+								this.update()
+						}
+					}
+						
+
+				
+					else if(selID == 4)
+					{
+					
+						console.log("The click occurred on "+x+","+y);
+						if(this.shapes.length ==0 || 
+							this.shapes[this.shapes.length-1].isFinished == true)
+							{
+								//create a new shape and add the point.
+								this.shapes.push(new DLine())
+								this.shapes[this.shapes.length-1].addPoint(x,y)
+							}
+							else
+							{
+								//add the point to the last shape.
+								this.shapes[this.shapes.length-1].addPoint(x,y)
+							}
+							this.update()
+						}
+					else
+					{
+						console.log("nope");
+						
+					}
+				}
+				
+				
+				shapeMenu()
+				{
+					console.log("The menu option is "+ this.selectedIndex);
+					console.log("the menu value is "+this.value);
+					selID = this.selectedIndex; //THIS GRABS THE INDEX VALUE OF THE SELECTION BOX
+					console.log(selID);
+					
+				}
+				colorMenu(event)
+				{
+					console.log("the menu value is "+this.value);
+					var hexColor = this.value;
+					console.log("My hex color is: " + hexColor);
+					
+					hexToRgb(hexColor);
+				}
+				
+				fillMenu()
+				{
+					console.log("The menu option is "+ this.selectedIndex);
+					console.log("the menu value is "+this.value);
+					fID = this.selectedIndex;
+					console.log(fID);
+			
+				}
+				clearCanvas()
+				{
+				console.log("you clicked me!");
+				gl.clear(gl.COLOR_BUFFER_BIT);
+				//this.update()
+		
+				}
+				slideHandle()
+				{
+					console.log("The slide has been changed to "+ this.value);
+				}
+			}
+			function canvasHandle(event)
+			{
+				var x = -1 + 2*event.clientX/myCanvas.width;
+				var y = -1 + 2*(myCanvas.height - event.clientY)/myCanvas.height;
+				myMain.handlePoint(x,y)
+			}
+			function dHandle(e)
+			{
+				//console.log("key pressed");
+				//if(e.keyCode == "32")
+				//
+				console.log("Shape cancelled!");
+				/*			
+				var x = 0;
+				var y = 0;
+				myMain.handlePoint(x,y);
+				*/
+				
+					var myTriangle = new DTriangle();
+					var myOLTriangle = new DTriangleOL();
+					var myDRectangle = new DRectangle();
+					var myDRectangleOL = new DRectangleOL();
+					var myLine = new DLine();
+					var myDNPoly = new DNPolygon();
+					var myDNPolyOL = new DNPolygonOL();
+					var myDCircle = new DCircle();
+					var myTriangle = new DTriangle();
+					var myCircleOL = new DCircleOL();
+
+					
+					myOLTriangle.clearPoints();
+					myTriangle.clearPoints;
+					myDRectangle.clearPoints();
+					myDRectangleOL.clearPoints();
+					myLine.clearPoints();
+					myDNPolyOL.clearPoints();
+					myDNPoly.clearPoints();
+					myDCircle.clearPoints();
+					myCircleOL.clearPoints();
+				//
+			}
+			
+			function hexToRgb(hex) 
+			{
+				hex = hex.replace('#','');
+				
+				 r = parseInt(hex.substring(0,2), 16);
+				 g = parseInt(hex.substring(2,4), 16);
+				 b = parseInt(hex.substring(4,6), 16);
+
+				console.log(r + "," + g + "," + b);
+				
+				r = r/300;
+				g = g/300;
+				b = b/300;
+				console.log(r + "," + g + "," + b);
+				
+				var myTriangle = new DTriangle();
+				var myOLTriangle = new DTriangleOL();
+				var myDRectangle = new DRectangle();
+				var myDRectangleOL = new DRectangleOL();
+				var myLine = new DLine();
+				var myDNPoly = new DNPolygon();
+				var myDNPolyOL = new DNPolygonOL();
+				var myDCircle = new DCircle();
+				var myCircleOL = new DCircleOL();
+				
+				myTriangle.addColor(r,g,b);
+				myOLTriangle.addColor(r,g,b);
+				myDRectangle.addColor(r,g,b);
+				myDRectangleOL.addColor(r,g,b);
+				myLine.addColor(r,g,b);
+				myDNPoly.addColor(r,g,b);
+				myDNPolyOL.addColor(r,g,b);
+				myDCircle.addColor(r,g,b);
+				myCircleOL.addColor(r,g,b);
+			}
+			
+			function inputNum()
+			{
+				console.log("Ta-dah!");
+				console.log(myNumber);
+				var myDNPoly = new DNPolygon();
+				//myDNPoly(myNumber);
+				myDNPoly.inputNumPoints(myNumber);
+			}
+			
+			
+			
+		</SCRIPT>
+
+	
+	</HEAD>
+	<BODY>
+			<CANVAS id="myCanvas" width="400" height="400" style="border:solid black;">
+			Your browser does not support canvas.
+			</CANVAS>
+			<button id="myClear">Clear Canvas</button>
+	<select id="mySel" size = "3">
+			<option value="Circle">Circle</option>
+			<option value="Square">Square</option>
+			<option selected value="Triangle">Triangle</option>
+			<option value="N-polygon">N-polygon</option>
+			<option value="Line">Line</option>
+	</select>
+	
+	<input type="color" id="myColor" name="myPickColor">
+	
+	<select id="myFill" size"3">
+			<option selected value="Fill">Fill</option>
+			<option value="Outline">Outline</option>
+	</select>
+<!--
+	<input type="number" id="myNumber1" value="7">
+	<button onclick="inputNum()">Do it</button>
+-->
+
+	
+	<!--
+			<input id="slide" type="range" min="0" max="100" step="10" value="50"/>
+-->
+			
+			<SCRIPT>
+				var canvas = document.getElementById("myCanvas");
+				var gl = canvas.getContext("webgl");
+				canvas.addEventListener("click",canvasHandle);
+				//To cancel the current points
+				canvas.addEventListener("dblclick",dHandle);
+				var pickedColor = document.getElementById("myColor");
+				var selID = 2; //THIS IS PRE-SET SO USERS DONT HAVE TO SELECT SHAPE BEFORE DRAWING
+				var fID =0;
+				var r = 0;
+				var g = 0;
+				var b = 0;
+				//maxPoints = 0;
+				//Initialize the webgl interface.
+				myMain = new Main();
+				
+				//Initialize choice options
+				var mySel = document.getElementById("mySel");
+				mySel.addEventListener("click", myMain.shapeMenu);
+
+				var myColor = document.getElementById("myColor");
+				//myColor.setAttribute("type","color");
+				//document.body.appendChild(myColor);
+				myColor.addEventListener("change", myMain.colorMenu,false);
+				
+				var myFill = document.getElementById("myFill");
+				myFill.addEventListener("click", myMain.fillMenu);
+
+				var myClear = document.getElementById("myClear");
+				myClear.addEventListener("click",myMain.clearCanvas);
+				
+				//var myNumber = document.getElementById("myNumber1").value;
+				
+				//var slide = document.getElementById("slide");
+				//slide.onchange = myMain.slideHandle;
+				//document.getElementById("myClear").onclick = clearCanvas();
+				
+				
+				
+			</SCRIPT>
+			
+	</BODY>
+
+</HTML>
